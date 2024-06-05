@@ -11,7 +11,9 @@ public class InterfaceController : MonoBehaviour
     public GameObject gameoverPanel;
     public Text text_SurviveTime;
     public Text text_SurviveTimeTop;
+    public Text text_enemiesKilled;
     private float bestScore;
+    private int enemiesKilledQuantity;
 
     // Start is called before the first frame update
     void Start() {
@@ -28,6 +30,11 @@ public class InterfaceController : MonoBehaviour
 
     public void UpdateSliderPlayerHealth(){
         slider_playerHealth.value = player_controller.status_controller.life;
+    }
+
+    public void UpdateQuantityEnemiesKilled(){
+        enemiesKilledQuantity++;
+        text_enemiesKilled.text = string.Format("X {0}", enemiesKilledQuantity);
     }
 
     public void GameOver(){

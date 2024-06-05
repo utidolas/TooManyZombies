@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementPlayer : MonoBehaviour, IKillable
+public class MovementPlayer : MonoBehaviour, IKillable, ICurable
 {
     private Rigidbody rb;
     private PlayerFeatures playerFeatures_controller;
@@ -73,5 +73,15 @@ public class MovementPlayer : MonoBehaviour, IKillable
         //New rotation by the ray and setting it 
         Quaternion newRotation = Quaternion.LookRotation(crosshairPos);
         rb.MoveRotation(newRotation);
+    }
+
+    public void HealLife(int HealQnt) { 
+        status_controller.life += HealQnt;
+
+        if (status_controller.life > status_controller.initialLife) { 
+            status_controller.life = status_controller.initialLife;
+        }
+
+        interface_controller.UpdateSliderPlayerHealth();
     }
 }

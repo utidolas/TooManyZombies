@@ -721,6 +721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  MedKit: {fileID: 1060151288946202, guid: 6150c6f66b7034ec5b3672478195682a, type: 3}
   EnemyDieSound: {fileID: 8300000, guid: 3991b7d764b7e184fb71d1455b528deb, type: 3}
   Zumbi_dmg: 20
 --- !u!114 &2489426508636082990

@@ -11,8 +11,11 @@ public class EnemyController : MonoBehaviour, IKillable
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private AnimationController animation_controller;
     private Status status_controller;
+    private InterfaceController interface_controller;
 
     [SerializeField] public GameObject Player;
+    [SerializeField] public GameObject MedKit;
+    public ZombieSpawner zombiespawner_controller;
     [SerializeField] public AudioClip EnemyDieSound;
     [SerializeField] public int Zumbi_dmg = 20;
     Color origColor;
@@ -22,9 +25,11 @@ public class EnemyController : MonoBehaviour, IKillable
     private Vector3 dir;
     private float wanderCounter;
     private float timeBetweenRandomPos = 4;
+    private float percentageMedkit = 0.1f;
 
 
     // Start is called before the first frame update
+    [System.Obsolete]
     void Start(){
 
         //Spawining randoms zombies
@@ -43,6 +48,7 @@ public class EnemyController : MonoBehaviour, IKillable
         animation_controller = GetComponent<AnimationController>();
         player_controller = Player.GetComponent<MovementPlayer>();
         status_controller = GetComponent<Status>();
+        interface_controller = GameObject.FindObjectOfType(typeof(InterfaceController)) as InterfaceController;
     }
 
     private void FixedUpdate()
@@ -83,6 +89,17 @@ public class EnemyController : MonoBehaviour, IKillable
     public void Die(){
         Destroy(gameObject);
         AudioController.soundInstance.PlayOneShot(EnemyDieSound);
+        CheckMedkitGen(percentageMedkit);
+        interface_controller.UpdateQuantityEnemiesKilled();
+        zombiespawner_controller.DecreaseQntZombieAlive();
+    }
+    //******************************************************
+
+    // ****************** MEDKIT ******************
+    public void CheckMedkitGen(float percentage) {
+        if(Random.value <= percentage){
+            Instantiate(MedKit, transform.position, Quaternion.identity);
+        }
     }
     //******************************************************
 
@@ -140,7 +157,7 @@ public class EnemyController : MonoBehaviour, IKillable
 
         if (wanderCounter <= 0){
             randomPos = RandomPos();
-            wanderCounter += timeBetweenRandomPos;
+            wanderCounter += timeBetweenRandomPos + Random.Range(-1f, 1f);
         }
 
         bool isCloseEnough = Vector3.Distance(transform.position, randomPos) <= 0.05;

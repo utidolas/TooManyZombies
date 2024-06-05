@@ -12,16 +12,26 @@ public class ZombieSpawner : MonoBehaviour
 
     float timerCount = 0;
     private float spawnDist = 3;
-    private float playerDistForSpawn = 20;
+    private float playerDistForSpawn = 15;
+    private int limitZombiesAlive = 10;
+    private int currentZombiesAlive = 2;
+    private float nextDifficultLevel = 30;
+    private float counterDifficultLevel;
 
     private void Start()
     {
         player_controller = GameObject.FindWithTag("Jogador");
+        counterDifficultLevel = nextDifficultLevel;
+        for(int i = 0; i < limitZombiesAlive / 2; i++){
+            StartCoroutine(SpawnNewZombie());
+        }
     }
 
     void Update() {
         //Spawning zombies defined by distance 
-        if (Vector3.Distance(transform.position, player_controller.transform.position) > playerDistForSpawn) {  
+        bool canGenZombie = Vector3.Distance(transform.position, player_controller.transform.position) > playerDistForSpawn;
+
+        if (canGenZombie == true && currentZombiesAlive < limitZombiesAlive) {  
             
             timerCount += Time.deltaTime;
 
@@ -32,6 +42,12 @@ public class ZombieSpawner : MonoBehaviour
             
             }
         }
+
+        if(Time.timeSinceLevelLoad > counterDifficultLevel){
+            limitZombiesAlive += 2;
+            counterDifficultLevel = Time.timeSinceLevelLoad + nextDifficultLevel;
+        }
+
     }
 
     private void OnDrawGizmos(){
@@ -50,7 +66,9 @@ public class ZombieSpawner : MonoBehaviour
             yield return null;
         }
 
-        Instantiate(Zombie, spawnPos, transform.rotation);
+        EnemyController zombie = Instantiate(Zombie, spawnPos, transform.rotation).GetComponent<EnemyController>();
+        zombie.zombiespawner_controller = this;
+        limitZombiesAlive++;
     }
 
     Vector3 RandomPos() { 
@@ -59,6 +77,10 @@ public class ZombieSpawner : MonoBehaviour
         pos.y = 0;
 
         return pos;
+    }
+
+    public void DecreaseQntZombieAlive(){
+        currentZombiesAlive--;
     }
 
 }
