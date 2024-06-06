@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BossController : MonoBehaviour, IKillable
 {
@@ -13,6 +14,7 @@ public class BossController : MonoBehaviour, IKillable
     private SkinnedMeshRenderer skinnedMeshRenderer;
 
     [SerializeField] public GameObject MedKit;
+    [SerializeField] public Slider healthBarBoss;
 
     private Vector3 dir;
     Color origColor;
@@ -30,6 +32,8 @@ public class BossController : MonoBehaviour, IKillable
         origColor = skinnedMeshRenderer.material.color;
 
         agent.speed = status_controller.speed;
+        healthBarBoss.maxValue = status_controller.initialLife;
+        UpdateInterface();
     }
 
     private void Update(){
@@ -55,6 +59,10 @@ public class BossController : MonoBehaviour, IKillable
         }
     }
 
+    void UpdateInterface() {
+        healthBarBoss.value = status_controller.life;
+    }
+
     //****************** IKILLABLE INTERFACE ******************
     private void AttackPlayer(){
         int dmg = Random.Range(30, 40);
@@ -64,6 +72,7 @@ public class BossController : MonoBehaviour, IKillable
     public void TakeDmg(int dmg)
     {
         status_controller.life--;
+        UpdateInterface();
         FlashRed();
 
         if (status_controller.life <= 0){
