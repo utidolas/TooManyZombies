@@ -17,4 +17,8 @@ public class AnimationController : MonoBehaviour
     public void AnimationMovement(float movementValue) {
         anim.SetFloat("Running", movementValue);
     }
+
+    public void AnimationDie(){
+        anim.SetTrigger("Die");
+    }
 }

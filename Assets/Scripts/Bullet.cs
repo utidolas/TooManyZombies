@@ -25,28 +25,42 @@ public class Bullet : MonoBehaviour
 
 
         // If object collided is enemy, destroy self and -1 enemy's life
-        if(!hasHitEnemy && collider_object.CompareTag("Inimigo")) {
+        if (!hasHitEnemy && collider_object.CompareTag("Inimigo")){
 
             // Get the EnemyController component of the collided enemy
             EnemyController enemyController = collider_object.GetComponent<EnemyController>();
 
+
             //If enemy is not Null
-            if(enemyController != null) {
+            if (enemyController != null && enemyController.status_controller.life > 0){
 
                 //reduce enemy's life and debug
                 enemyController.TakeDmg(bulletDmg);
 
                 //Calculate knockback direction from bullet to enemy
                 Vector3 knockbackDirection = collider_object.transform.position - transform.position;
-                enemyController.Knockback(knockbackDirection.normalized, knockbackForce, knockbackDecelerationTime); 
+                enemyController.Knockback(knockbackDirection.normalized, knockbackForce, knockbackDecelerationTime);
 
                 hasHitEnemy = true;
-            
+
             }
-        
+            Destroy(gameObject);
         }
+        else if (!hasHitEnemy && collider_object.CompareTag("Chefe")){
+            // Get the BossController component of the collided boss
+            BossController enemyController = collider_object.GetComponent<BossController>();
 
-        Destroy(gameObject);
 
+            //If boss is not Null
+            if (enemyController != null && enemyController.status_controller.life > 0){
+
+                //reduce boss's life and debug
+                enemyController.TakeDmg(bulletDmg);
+                hasHitEnemy = true;
+
+            }
+            Destroy(gameObject);
+        }
     }
+
 }

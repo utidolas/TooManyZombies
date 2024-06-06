@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    public int initialLife = 100;
-    public int life;
-    public float speed = 13;
+    [SerializeField] public int initialLife = 100;
+    [SerializeField] public int life;
+    [SerializeField] public float speed = 13;
 
     private void Awake(){
 

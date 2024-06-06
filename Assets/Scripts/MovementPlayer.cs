@@ -67,6 +67,12 @@ public class MovementPlayer : MonoBehaviour, IKillable, ICurable
         Time.timeScale = 0;
         interface_controller.GameOver();
     }
+
+    public void AnimationDieGround(){
+        rb.constraints = RigidbodyConstraints.None;
+        rb.velocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
+    }
     // *********************************************************
     public void Rotate(Vector3 crosshairPos)
     {
@@ -75,6 +81,7 @@ public class MovementPlayer : MonoBehaviour, IKillable, ICurable
         rb.MoveRotation(newRotation);
     }
 
+    // ******************* ItemsRelated *******************
     public void HealLife(int HealQnt) { 
         status_controller.life += HealQnt;
 
@@ -84,4 +91,5 @@ public class MovementPlayer : MonoBehaviour, IKillable, ICurable
 
         interface_controller.UpdateSliderPlayerHealth();
     }
+    //*********************************************************
 }

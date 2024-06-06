@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour, IKillable
     private MovementPlayer player_controller;
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private AnimationController animation_controller;
-    private Status status_controller;
+    public Status status_controller;
     private InterfaceController interface_controller;
 
     [SerializeField] public GameObject Player;
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour, IKillable
     void Start(){
 
         //Spawining randoms zombies
-        int spawn_zombie_type = Random.Range(1, 28);
+        int spawn_zombie_type = Random.Range(1, transform.childCount);
         transform.GetChild(spawn_zombie_type).gameObject.SetActive(true);
 
         // Getting renderer component of the generated zombie && storing original color
@@ -65,7 +65,7 @@ public class EnemyController : MonoBehaviour, IKillable
         if (dist > 15) {
             Wander();
         }
-        else if (dist > 2.8) {
+        else if (dist > 3) {
             dir = Player.transform.position - transform.position;
             rb.MovePosition(rb.position + (status_controller.speed * Time.deltaTime * dir.normalized));
             animation_controller.AnimationAttack(false);
@@ -87,11 +87,22 @@ public class EnemyController : MonoBehaviour, IKillable
     }
 
     public void Die(){
-        Destroy(gameObject);
+        GetComponent<Collider>().enabled = false;
+        this.enabled = false;
+        animation_controller.AnimationDie();
+        AnimationDieGround(); 
         AudioController.soundInstance.PlayOneShot(EnemyDieSound);
         CheckMedkitGen(percentageMedkit);
         interface_controller.UpdateQuantityEnemiesKilled();
         zombiespawner_controller.DecreaseQntZombieAlive();
+        Destroy(gameObject, 2);
+    }
+
+    public void AnimationDieGround()
+    {
+        rb.constraints = RigidbodyConstraints.None;
+        rb.velocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
     }
     //******************************************************
 
