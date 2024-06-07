@@ -12,6 +12,7 @@ public class InterfaceController : MonoBehaviour
     public Text text_SurviveTime;
     public Text text_SurviveTimeTop;
     public Text text_enemiesKilled;
+    public Text text_bossWarning;
     private float bestScore;
     private int enemiesKilledQuantity;
 
@@ -64,5 +65,29 @@ public class InterfaceController : MonoBehaviour
 
     public void Restart(){
         SceneManager.LoadScene("MainScene");
+    }
+
+    public void BossWarning() {
+        StartCoroutine(FadeText(1, text_bossWarning));
+    }
+
+    IEnumerator FadeText(float time, Text textToFade){
+
+        textToFade.gameObject.SetActive(true);
+        Color textColor = textToFade.color;
+        textColor.a = 1;
+        textToFade.color = textColor;
+        yield return new WaitForSeconds(time);
+        float counter = 0;
+        while(textToFade.color.a > 0)
+        {
+            counter += Time.deltaTime / time;
+            textColor.a = Mathf.Lerp(1, 0, counter);
+            textToFade.color = textColor;
+            if (textToFade.color.a <= 0) {
+                textToFade.gameObject.SetActive(false);
+            }
+            yield return null;
+        }
     }
 }

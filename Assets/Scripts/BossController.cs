@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -15,7 +16,8 @@ public class BossController : MonoBehaviour, IKillable
 
     [SerializeField] public GameObject MedKit;
     [SerializeField] public Slider healthBarBoss;
-
+    [SerializeField] public Image fillSlider;
+    [SerializeField] public Color maxHealthColor, minHealthColor;
     private Vector3 dir;
     Color origColor;
     float flashTime = 0.12f;
@@ -61,6 +63,9 @@ public class BossController : MonoBehaviour, IKillable
 
     void UpdateInterface() {
         healthBarBoss.value = status_controller.life;
+        float healthPercentage = (float)status_controller.life / status_controller.initialLife;
+        Color healthColor = Color.Lerp(minHealthColor, maxHealthColor, healthPercentage);
+        fillSlider.color = healthColor; 
     }
 
     //****************** IKILLABLE INTERFACE ******************
