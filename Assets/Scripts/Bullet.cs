@@ -34,7 +34,9 @@ public class Bullet : MonoBehaviour
             //If enemy is not Null
             if (enemyController != null && enemyController.status_controller.life > 0){
 
-                //reduce enemy's life and debug
+                //reduce enemy's life and blood
+                Quaternion rotationOppositeToBullet = Quaternion.LookRotation(-transform.forward);
+                enemyController.BloodParticle(transform.position, rotationOppositeToBullet);
                 enemyController.TakeDmg(bulletDmg);
 
                 //Calculate knockback direction from bullet to enemy
@@ -54,7 +56,9 @@ public class Bullet : MonoBehaviour
             //If boss is not Null
             if (enemyController != null && enemyController.status_controller.life > 0){
 
-                //reduce boss's life and debug
+                //reduce boss's life and blood
+                Quaternion rotationOppositeToBullet = Quaternion.LookRotation(-transform.forward);
+                enemyController.BloodParticle(transform.position, rotationOppositeToBullet);
                 enemyController.TakeDmg(bulletDmg);
                 hasHitEnemy = true;
 

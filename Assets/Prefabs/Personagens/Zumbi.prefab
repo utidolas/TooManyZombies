@@ -695,8 +695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff105432a6c79054fa5878861ad4e530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status_controller: {fileID: 0}
   Player: {fileID: 0}
   MedKit: {fileID: 1060151288946202, guid: 6150c6f66b7034ec5b3672478195682a, type: 3}
+  Particle_BloodZombie: {fileID: 2662963694526312093, guid: 3a86ad480668c8b40bb1b7d4a423dc82, type: 3}
   zombiespawner_controller: {fileID: 0}
   EnemyDieSound: {fileID: 8300000, guid: 3991b7d764b7e184fb71d1455b528deb, type: 3}
   Zumbi_dmg: 20

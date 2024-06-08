@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour, IKillable
 
     [SerializeField] public GameObject Player;
     [SerializeField] public GameObject MedKit;
+    [SerializeField] public GameObject Particle_BloodZombie;
     public ZombieSpawner zombiespawner_controller;
     [SerializeField] public AudioClip EnemyDieSound;
     [SerializeField] public int Zumbi_dmg = 20;
@@ -84,6 +85,10 @@ public class EnemyController : MonoBehaviour, IKillable
         if (status_controller.life <= 0) {
             Die();
         }
+    }
+
+    public void BloodParticle(Vector3 position, Quaternion rotation){
+        Instantiate(Particle_BloodZombie, position, rotation);
     }
 
     public void Die(){

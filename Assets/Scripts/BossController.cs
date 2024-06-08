@@ -15,6 +15,7 @@ public class BossController : MonoBehaviour, IKillable
     private SkinnedMeshRenderer skinnedMeshRenderer;
 
     [SerializeField] public GameObject MedKit;
+    [SerializeField] public GameObject Particle_BloodZombie;
     [SerializeField] public Slider healthBarBoss;
     [SerializeField] public Image fillSlider;
     [SerializeField] public Color maxHealthColor, minHealthColor;
@@ -83,6 +84,10 @@ public class BossController : MonoBehaviour, IKillable
         if (status_controller.life <= 0){
             Die();
         }
+    }
+    public void BloodParticle(Vector3 position, Quaternion rotation)
+    {
+        Instantiate(Particle_BloodZombie, position, rotation);
     }
 
     public void Die()

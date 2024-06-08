@@ -208,6 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status_controller: {fileID: 0}
   MedKit: {fileID: 1060151288946202, guid: 6150c6f66b7034ec5b3672478195682a, type: 3}
+  Particle_BloodZombie: {fileID: 2662963694526312093, guid: 3a86ad480668c8b40bb1b7d4a423dc82, type: 3}
   healthBarBoss: {fileID: 8842278753054280761}
   fillSlider: {fileID: 2466937245466249592}
   maxHealthColor: {r: 0.3254902, g: 1, b: 0.49019608, a: 1}
